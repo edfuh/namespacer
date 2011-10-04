@@ -1,3 +1,9 @@
+/*!
+  * Namespacer: you know, for namespacing
+  * Ed Fuhrken
+  * https://github.com/edfuh/namespacer
+  * License MIT
+  */
 (function (name, definition) {
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = definition();
