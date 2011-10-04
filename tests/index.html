@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jquery.js"></script>
+  <link rel="stylesheet" href="qunit.css" />
+  <script src="qunit.js"></script>
+  <script src="../namespacer.js"></script>
+
+  <script>
+  $(document).ready(function () {
+
+      test('Is this thing on?', function() {
+          strictEqual(typeof ns, 'function', 'namespacer exists');
+
+          ns('EDFUH');
+          strictEqual(typeof EDFUH, 'object', 'We expect an object');
+      });
+
+      test('Go deep', function() {
+          ns('EDFUH.is.a.baller');
+          strictEqual(typeof EDFUH.is.a.baller, 'object', 'We expect an object');
+      });
+
+      module('What is it good for');
+      
+      test('create namespace', function () {
+          delete window.EDFUH;
+
+          strictEqual(typeof EDFUH, 'undefined', 'namespace got deleted');
+
+          ns('EDFUH');
+          strictEqual(typeof EDFUH, 'object', 'new namespace yay');
+      });
+
+      test('Namespace from object', function () {
+          ns('LILWAYNE', {
+              'annoying' : true,
+              'talented' : false
+          });
+
+          ok(typeof LILWAYNE !== 'undefined' && LILWAYNE.annoying === true && LILWAYNE.talented === false, 'Yup lil wayne sucks');
+      });
+
+      test('cause it\'s in the Readme', function () {
+          ns('app.Utils', {
+              list : [0, 1, 2, 3, 4]
+          });
+
+          ok(app.Utils.list.length === 5, 'TDD W00T');
+      });
+
+      test('Don\'t clobber me bro', function () {
+          window.BESTRAPPEREVER = {
+              list : ['Marky Mark', 'Marky Mark', 'Marky Mark', 'Marky Mark', 'Marky Mark']
+          };
+
+          strictEqual(BESTRAPPEREVER.list[0], 'Marky Mark', 'Marky Mark is the best rapper ever');
+
+          ns('BESTRAPPEREVER.otherRappers.list');
+
+          BESTRAPPEREVER.otherRappers.list = ['Tupac'];
+
+          strictEqual(BESTRAPPEREVER.list[0], 'Marky Mark', 'Marky Mark is STILL the best rapper ever');
+          strictEqual(BESTRAPPEREVER.otherRappers.list[0], 'Tupac', 'But there are other rappers too');
+      });
+
+      module('Idiot proofing');
+
+      test('Names are strings, with letters in them', function() {
+          raises(function () {
+              ns({});
+          }, 'Throw error when namespace is an object');
+
+          raises(function () {
+              ns(123);
+          }, 'Throw error when namespace is a number');
+
+          raises(function () {
+              ns(123);
+          }, 'Throw error when namespace is an array');
+
+          raises(function () {
+              ns('');
+          }, 'Throw error when namespace is an empty string');
+
+          raises(function () {
+              ns(/edrulz/);
+          }, 'Throw error when namespace is a regex');
+      });
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">QUnit example</h1>
+ <h2 id="qunit-banner"></h2>
+ <div id="qunit-testrunner-toolbar"></div>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ <div id="qunit-fixture">test markup, will be hidden</div>
+</body>
+</html>
