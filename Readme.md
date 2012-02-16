@@ -14,9 +14,3 @@ looks better. And so does this:
     ns('app.Utils', {
         list : [0, 1, 2, 3, 4]
     })
-
-
-### TODO:
-  * AMD tests
-  * real CJS tests
-    
