@@ -1,3 +1,11 @@
+#This code had it's use at one point, but now do yourself a favor and use AMD, it will change your life
+
+
+
+--
+
+
+
 #Namespacer
 
 Because this:
